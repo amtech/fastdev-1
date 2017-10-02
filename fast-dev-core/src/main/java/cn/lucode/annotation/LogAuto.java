@@ -7,9 +7,49 @@ import java.lang.annotation.Target;
 
 /**
  * Created by yunfeng.lu on 2017/9/18.
- */
-@Retention(RetentionPolicy.RUNTIME)
+ */@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface LogAuto {
-    String value()  default "";
+    public  String  value()  default "";
+    public  ParamPrintOption outParamPrint() default ParamPrintOption.UNCONFIG;
+
+
+    public enum ParamPrintOption{
+
+        /**
+         * 未配置
+         */
+        UNCONFIG("UNCONFIG","未配置"),
+
+        /**
+         * 打印
+         */
+        PRINT("PRINT","打印"),
+
+        /**
+         * 忽略打印
+         */
+        IGNORE("IGNORE","忽略打印");
+
+        /**
+         * 代码
+         */
+        private String code;
+
+        /**
+         * desc
+         */
+        private String desc;
+
+        /**
+         * @param code
+         */
+        private ParamPrintOption(String code,String desc) {
+            this.code = code;
+            this.desc = desc;
+        }
+
+
+    }
 }
+
