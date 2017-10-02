@@ -15,7 +15,7 @@ public class DruidServletConfig {
         StatViewServlet servlet = new StatViewServlet();
         ServletRegistrationBean bean = new ServletRegistrationBean(servlet, "/druid/*");
         bean.addInitParameter("loginUsername", "druid");
-        bean.addInitParameter("loginPassword", "pinche");
+        bean.addInitParameter("loginPassword", "123");
 
         return bean;
     }

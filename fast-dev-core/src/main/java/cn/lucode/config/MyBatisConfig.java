@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 /**
  * Created by yunfeng.lu on 2017/9/18.
  */
-@MapperScan(basePackages = "com.lucode.**.dao")
+@MapperScan(basePackages = "cn.lucode.**.dao")
 @Configuration
 public class MyBatisConfig {
 
