@@ -7,19 +7,33 @@ import org.apache.http.Consts;
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 /**
- * 创建HttpReqHead
+ * 创建 HttpReqHead
  * Created by yunfeng.lu on 2017/10/3.
  */
 public class HttpHeader {
 
-    private HttpHeader() {};
+    private HttpHeader() {}
 
     public static HttpHeader custom() {
-        return new HttpHeader();
+        HttpHeader httpHeader=new HttpHeader();
+        Map map=httpHeader.getHeaderMaps();
+        // 默认头部信息
+        String key="Accept";
+        String value="text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
+        map.put(key,new BasicHeader(key, value));
+        return httpHeader;
     }
 
     //记录head头信息
     private Map<String, Header> headerMaps = new HashMap<String, Header>();
+
+    public Map<String, Header> getHeaderMaps() {
+        return headerMaps;
+    }
+
+    public void setHeaderMaps(Map<String, Header> headerMaps) {
+        this.headerMaps = headerMaps;
+    }
 
     /**
      * 指定客户端能够接收的内容类型

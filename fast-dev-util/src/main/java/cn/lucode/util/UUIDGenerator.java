@@ -16,9 +16,9 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class TinyUUIDGenerator {
+public class UUIDGenerator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TinyUUIDGenerator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UUIDGenerator.class);
 
     /**
      * 最大容器容量
@@ -94,7 +94,7 @@ public class TinyUUIDGenerator {
     }
 
     private static short getCount() {
-        synchronized(TinyUUIDGenerator.class) {
+        synchronized(UUIDGenerator.class) {
             counter++;
             if (counter<0)
             {
