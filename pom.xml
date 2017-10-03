@@ -35,6 +35,9 @@
 		<fastjson.version>1.2.28</fastjson.version>
 		<pagehelper.version>5.0.0</pagehelper.version>
 		<common.version>3.4</common.version>
+		<!--httpClient-->
+		<httpclient.version>4.4.1</httpclient.version>
+		<httpasyncclient.version>4.1</httpasyncclient.version>
 		<!--sdk 环境-->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -140,6 +143,22 @@
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 				<version>${common.version}</version>
+
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>${httpclient.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpmime</artifactId>
+				<version>${httpclient.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpasyncclient</artifactId>
+				<version>${httpasyncclient.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
