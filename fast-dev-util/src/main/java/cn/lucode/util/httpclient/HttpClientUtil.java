@@ -66,19 +66,16 @@ public class HttpClientUtil{
         }
     }
 
-    //-----------华----丽----分----割----线--------------
-    //-----------华----丽----分----割----线--------------
-    //-----------华----丽----分----割----线--------------
 
     /**
      * 以Get方式，请求资源或服务
      *
-     * @param client				client对象
-     * @param url					资源地址
-     * @param headers			请求头信息
-     * @param context			http上下文，用于cookie操作
-     * @param encoding		编码
-     * @return						返回处理结果
+     * @param client client对象
+     * @param url	资源地址
+     * @param headers 请求头信息
+     * @param context	http上下文，用于cookie操作
+     * @param encoding	编码
+     * @return		返回处理结果
      * @throws HttpProcessException
      */
     public static String get(HttpClient client, String url, Header[] headers, HttpContext context, String encoding) throws HttpProcessException {
