@@ -26,6 +26,9 @@ CREATE TABLE `schedule_job_log` (
   KEY `job_id` (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务日志';
 
+INSERT INTO `schedule_job` (`job_id`,`bean_name`, `method_name`, `params`, `cron_expression`, `status`, `remark`, `create_time`) VALUES ('11','testTask', 'test', 'lucode', '0/10 * * * * ?', '0', '有参数测试', '2017-12-01 23:46:46');
+INSERT INTO `schedule_job` (`job_id`,`bean_name`, `method_name`, `params`, `cron_expression`, `status`, `remark`, `create_time`) VALUES ('12','testTask', 'test2', NULL, '0/20 * * * * ?', '1', '无参数测试', '2017-12-01 14:15:56');
+
 --  quartz自带表结构
 CREATE TABLE QRTZ_JOB_DETAILS(
   SCHED_NAME VARCHAR(120) NOT NULL,
