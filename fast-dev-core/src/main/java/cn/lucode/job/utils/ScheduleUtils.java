@@ -1,7 +1,8 @@
 package cn.lucode.job.utils;
 
 
-import cn.lucode.job.entity.ScheduleJobEntity;
+
+import cn.lucode.job.model.ScheduleJob;
 import cn.lucode.util.LogUtil;
 import com.google.gson.Gson;
 import org.quartz.*;
@@ -21,21 +22,21 @@ public class ScheduleUtils {
     /**
      * 获取触发器key
      */
-    public static TriggerKey getTriggerKey(Long jobId) {
+    public static TriggerKey getTriggerKey(String jobId) {
         return TriggerKey.triggerKey(JOB_NAME + jobId);
     }
     
     /**
      * 获取jobKey
      */
-    public static JobKey getJobKey(Long jobId) {
+    public static JobKey getJobKey(String jobId) {
         return JobKey.jobKey(JOB_NAME + jobId);
     }
 
     /**
      * 获取表达式触发器
      */
-    public static CronTrigger getCronTrigger(Scheduler scheduler, Long jobId) {
+    public static CronTrigger getCronTrigger(Scheduler scheduler, String jobId) {
         try {
             return (CronTrigger) scheduler.getTrigger(getTriggerKey(jobId));
         } catch (SchedulerException e) {
@@ -47,10 +48,10 @@ public class ScheduleUtils {
     /**
      * 创建定时任务
      */
-    public static void createScheduleJob(Scheduler scheduler, ScheduleJobEntity scheduleJob) {
+    public static void createScheduleJob(Scheduler scheduler, ScheduleJob scheduleJob) {
         try {
         	//构建job信息
-            JobDetail jobDetail = JobBuilder.newJob(ScheduleJob.class).withIdentity(getJobKey(scheduleJob.getJobId())).build();
+            JobDetail jobDetail = JobBuilder.newJob(ScheduleJobRun.class).withIdentity(getJobKey(scheduleJob.getJobId())).build();
 
             //表达式调度构建器
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(scheduleJob.getCronExpression())
@@ -60,7 +61,7 @@ public class ScheduleUtils {
             CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(scheduleJob.getJobId())).withSchedule(scheduleBuilder).build();
 
             //放入参数，运行时的方法可以获取
-            jobDetail.getJobDataMap().put(ScheduleJobEntity.JOB_PARAM_KEY, new Gson().toJson(scheduleJob));
+            jobDetail.getJobDataMap().put(ScheduleJob.JOB_PARAM_KEY, new Gson().toJson(scheduleJob));
             
             scheduler.scheduleJob(jobDetail, trigger);
             
@@ -69,14 +70,14 @@ public class ScheduleUtils {
             	pauseJob(scheduler, scheduleJob.getJobId());
             }
         } catch (SchedulerException e) {
-            LogUtil.error(LOGGER,e,"创建定时任务失败 ScheduleJobEntity:{0}",scheduleJob);
+            LogUtil.error(LOGGER,e,"创建定时任务失败 ScheduleJobEntity:{0}", scheduleJob);
         }
     }
     
     /**
      * 更新定时任务
      */
-    public static void updateScheduleJob(Scheduler scheduler, ScheduleJobEntity scheduleJob) {
+    public static void updateScheduleJob(Scheduler scheduler, ScheduleJob scheduleJob) {
         try {
             TriggerKey triggerKey = getTriggerKey(scheduleJob.getJobId());
 
@@ -90,7 +91,7 @@ public class ScheduleUtils {
             trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
             
             //参数
-            trigger.getJobDataMap().put(ScheduleJobEntity.JOB_PARAM_KEY, new Gson().toJson(scheduleJob));
+            trigger.getJobDataMap().put(ScheduleJob.JOB_PARAM_KEY, new Gson().toJson(scheduleJob));
             
             scheduler.rescheduleJob(triggerKey, trigger);
             
@@ -107,22 +108,22 @@ public class ScheduleUtils {
     /**
      * 立即执行任务
      */
-    public static void run(Scheduler scheduler, ScheduleJobEntity scheduleJob) {
+    public static void run(Scheduler scheduler, ScheduleJob scheduleJob) {
         try {
         	//参数
         	JobDataMap dataMap = new JobDataMap();
-        	dataMap.put(ScheduleJobEntity.JOB_PARAM_KEY, new Gson().toJson(scheduleJob));
+        	dataMap.put(ScheduleJob.JOB_PARAM_KEY, new Gson().toJson(scheduleJob));
         	
             scheduler.triggerJob(getJobKey(scheduleJob.getJobId()), dataMap);
         } catch (SchedulerException e) {
-            LogUtil.error(LOGGER,e,"立即执行定时任务失败 ScheduleJobEntity:{0}",scheduleJob);
+            LogUtil.error(LOGGER,e,"立即执行定时任务失败 ScheduleJob:{0}",scheduleJob);
         }
     }
 
     /**
      * 暂停任务
      */
-    public static void pauseJob(Scheduler scheduler, Long jobId) {
+    public static void pauseJob(Scheduler scheduler, String jobId) {
         try {
             scheduler.pauseJob(getJobKey(jobId));
         } catch (SchedulerException e) {
@@ -133,7 +134,7 @@ public class ScheduleUtils {
     /**
      * 恢复任务
      */
-    public static void resumeJob(Scheduler scheduler, Long jobId) {
+    public static void resumeJob(Scheduler scheduler, String jobId) {
         try {
             scheduler.resumeJob(getJobKey(jobId));
         } catch (SchedulerException e) {
@@ -144,7 +145,7 @@ public class ScheduleUtils {
     /**
      * 删除定时任务
      */
-    public static void deleteScheduleJob(Scheduler scheduler, Long jobId) {
+    public static void deleteScheduleJob(Scheduler scheduler, String jobId) {
         try {
             scheduler.deleteJob(getJobKey(jobId));
         } catch (SchedulerException e) {

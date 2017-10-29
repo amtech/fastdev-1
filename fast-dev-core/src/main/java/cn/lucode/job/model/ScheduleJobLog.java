@@ -1,27 +1,23 @@
-package cn.lucode.job.entity;
+package cn.lucode.job.model;
 
-import org.hibernate.validator.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author yunfeng.lu
- * @create 2017/10/24.
+ * @author 
  */
-public class ScheduleJobLogEntity implements Serializable {
-
-
-    private static final long serialVersionUID = 4937295795554870827L;
+public class ScheduleJobLog implements Serializable {
     /**
-     * 日志id
+     * 任务日志id
      */
-    private Long logId;
+    private String logId;
 
     /**
      * 任务id
      */
-    private Long jobId;
+    private String jobId;
 
     /**
      * spring bean名称
@@ -56,21 +52,24 @@ public class ScheduleJobLogEntity implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
-    public Long getLogId() {
+    private static final long serialVersionUID = 1L;
+
+    public String getLogId() {
         return logId;
     }
 
-    public void setLogId(Long logId) {
+    public void setLogId(String logId) {
         this.logId = logId;
     }
 
-    public Long getJobId() {
+    public String getJobId() {
         return jobId;
     }
 
-    public void setJobId(Long jobId) {
+    public void setJobId(String jobId) {
         this.jobId = jobId;
     }
 

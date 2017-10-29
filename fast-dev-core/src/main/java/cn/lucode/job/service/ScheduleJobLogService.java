@@ -1,6 +1,6 @@
 package cn.lucode.job.service;
 
-import cn.lucode.job.entity.ScheduleJobLogEntity;
+import cn.lucode.job.model.ScheduleJobLog;
 
 import java.util.List;
 import java.util.Map;
@@ -10,23 +10,11 @@ import java.util.Map;
  * @create 2017/10/24.
  */
 public interface ScheduleJobLogService {
-    /**
-     * 根据ID，查询定时任务日志
-     */
-    ScheduleJobLogEntity queryObject(Long jobId);
+    ScheduleJobLog queryObject(String jobId) throws Exception;
 
-    /**
-     * 查询定时任务日志列表
-     */
-    List<ScheduleJobLogEntity> queryList(Map<String, Object> map);
+    Map queryList(Integer pageNo, Integer pageSize) throws Exception;
 
-    /**
-     * 查询总数
-     */
-    int queryTotal(Map<String, Object> map);
+    int deleteObject(String jobId) throws Exception;
 
-    /**
-     * 保存定时任务日志
-     */
-    void save(ScheduleJobLogEntity log);
+    void save(ScheduleJobLog log) throws Exception;
 }

@@ -1,6 +1,6 @@
 -- 定时任务
 CREATE TABLE `schedule_job` (
-  `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务id',
+  `job_id` varchar(32) NOT NULL  COMMENT '任务id',
   `bean_name` varchar(200) DEFAULT NULL COMMENT 'spring bean名称',
   `method_name` varchar(100) DEFAULT NULL COMMENT '方法名',
   `params` varchar(2000) DEFAULT NULL COMMENT '参数',
@@ -13,8 +13,8 @@ CREATE TABLE `schedule_job` (
 
 -- 定时任务日志
 CREATE TABLE `schedule_job_log` (
-  `log_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务日志id',
-  `job_id` bigint(20) NOT NULL COMMENT '任务id',
+  `log_id` varchar(32) NOT NULL  COMMENT '任务日志id',
+  `job_id` varchar(32) NOT NULL COMMENT '任务id',
   `bean_name` varchar(200) DEFAULT NULL COMMENT 'spring bean名称',
   `method_name` varchar(100) DEFAULT NULL COMMENT '方法名',
   `params` varchar(2000) DEFAULT NULL COMMENT '参数',

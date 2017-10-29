@@ -1,8 +1,8 @@
 package cn.lucode.job.utils;
 
 
-import cn.lucode.job.entity.ScheduleJobEntity;
-import cn.lucode.job.entity.ScheduleJobLogEntity;
+import cn.lucode.job.model.ScheduleJob;
+import cn.lucode.job.model.ScheduleJobLog;
 import cn.lucode.job.service.ScheduleJobLogService;
 import cn.lucode.util.SpringContextUtils;
 import com.google.gson.Gson;
@@ -25,21 +25,21 @@ import java.util.concurrent.Future;
  * @author yunfeng.lu
  * @create 2017/10/24.
  */
-public class ScheduleJob extends QuartzJobBean {
+public class ScheduleJobRun extends QuartzJobBean {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	private ExecutorService service = Executors.newSingleThreadExecutor(); 
 	
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-		String jsonJob = context.getMergedJobDataMap().getString(ScheduleJobEntity.JOB_PARAM_KEY);
-		ScheduleJobEntity scheduleJob = new Gson().fromJson(jsonJob, ScheduleJobEntity.class);
+		String jsonJob = context.getMergedJobDataMap().getString(ScheduleJob.JOB_PARAM_KEY);
+		ScheduleJob scheduleJob = new Gson().fromJson(jsonJob, ScheduleJob.class);
 
 		//获取spring bean
         ScheduleJobLogService scheduleJobLogService =
 				(ScheduleJobLogService) SpringContextUtils.getBean("scheduleJobLogService");
         
         //数据库保存执行记录
-        ScheduleJobLogEntity log = new ScheduleJobLogEntity();
+        ScheduleJobLog log = new ScheduleJobLog();
         log.setJobId(scheduleJob.getJobId());
         log.setBeanName(scheduleJob.getBeanName());
         log.setMethodName(scheduleJob.getMethodName());
@@ -52,7 +52,7 @@ public class ScheduleJob extends QuartzJobBean {
         try {
             //执行任务
         	logger.info("任务准备执行，任务ID：" + scheduleJob.getJobId());
-            ScheduleRunnable task = new ScheduleRunnable(scheduleJob.getBeanName(), 
+            ScheduleRunnable task = new ScheduleRunnable(scheduleJob.getBeanName(),
             		scheduleJob.getMethodName(), scheduleJob.getParams());
             Future<?> future = service.submit(task);
             
@@ -62,6 +62,7 @@ public class ScheduleJob extends QuartzJobBean {
 			long times = System.currentTimeMillis() - startTime;
 			log.setTimes((int)times);
 			//任务状态    0：成功    1：失败
+
 			log.setStatus(0);
 			
 			logger.info("任务执行完毕，任务ID：" + scheduleJob.getJobId() + "  总共耗时：" + times + "毫秒");
@@ -76,7 +77,12 @@ public class ScheduleJob extends QuartzJobBean {
 			log.setStatus(1);
 			log.setError(StringUtils.substring(e.toString(), 0, 2000));
 		}finally {
-			scheduleJobLogService.save(log);
+			try {
+				scheduleJobLogService.save(log);
+			} catch (Exception e) {
+				logger.error("任务日志记录失败，任务日志ID：" + log.getJobId(), e);
+
+			}
 		}
     }
 }

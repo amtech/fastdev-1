@@ -1,6 +1,7 @@
 package cn.lucode.job.service;
 
-import cn.lucode.job.entity.ScheduleJobEntity;
+
+import cn.lucode.job.model.ScheduleJob;
 
 import java.util.List;
 import java.util.Map;
@@ -13,50 +14,46 @@ public interface ScheduleJobService {
     /**
      * 根据ID，查询定时任务
      */
-    ScheduleJobEntity queryObject(Long jobId);
+    ScheduleJob queryObject(String jobId) throws Exception;
 
     /**
      * 查询定时任务列表
      */
-    List<ScheduleJobEntity> queryList(Map<String, Object> map);
+    Map queryList(Integer pageNo, Integer pageSize) throws Exception;
 
-    /**
-     * 查询总数
-     */
-    int queryTotal(Map<String, Object> map);
 
     /**
      * 保存定时任务
      */
-    void save(ScheduleJobEntity scheduleJob);
+    void save(ScheduleJob scheduleJob) throws Exception;
 
     /**
      * 更新定时任务
      */
-    void update(ScheduleJobEntity scheduleJob);
+    void update(ScheduleJob scheduleJob) throws Exception;
 
     /**
      * 批量删除定时任务
      */
-    void deleteBatch(Long[] jobIds);
+    void deleteBatch(String[] jobIds) throws Exception;
 
     /**
      * 批量更新定时任务状态
      */
-    int updateBatch(Long[] jobIds, int status);
+    void updateBatch(String[] jobIds, int status) throws Exception;
 
     /**
      * 立即执行
      */
-    void run(Long[] jobIds);
+    void run(String jobId) throws Exception;
 
     /**
      * 暂停运行
      */
-    void pause(Long[] jobIds);
+    void pause(String jobId) throws Exception;
 
     /**
      * 恢复运行
      */
-    void resume(Long[] jobIds);
+    void resume(String[] jobIds) throws Exception;
 }

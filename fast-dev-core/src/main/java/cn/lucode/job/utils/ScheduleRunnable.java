@@ -1,6 +1,7 @@
 package cn.lucode.job.utils;
 
 
+import cn.lucode.common.ReturnCodeModel;
 import cn.lucode.exception.CommonException;
 import cn.lucode.util.SpringContextUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -41,7 +42,7 @@ public class ScheduleRunnable implements Runnable {
 				method.invoke(target);
 			}
 		}catch (Exception e) {
-			throw new CommonException("执行定时任务失败");
+			throw new CommonException(ReturnCodeModel.SCHEDULE_JOB_ERROR);
 		}
 	}
 
