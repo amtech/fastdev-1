@@ -34,7 +34,7 @@ public class MyBatisConfig {
         sqlSessionFactoryBean.setPlugins( new Interceptor[]{pageHelper});
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:com/bangdao/**/dao/*.xml"));
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:cn/lucode/**/dao/*.xml"));
 
         SqlSessionFactory sqlSessionFactory = null;
         try {
