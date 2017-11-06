@@ -2,6 +2,7 @@ package cn.lucode.aop;
 
 import cn.lucode.annotation.LogAuto;
 import cn.lucode.exception.CommonException;
+import cn.lucode.util.IPUtils;
 import cn.lucode.util.LogUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -9,7 +10,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -38,6 +42,15 @@ public class LogAop {
 
     @Around("@annotation(logAuto)")
     public Object aroud(ProceedingJoinPoint pjp, LogAuto logAuto) throws Throwable {
+        String requestIp = null;
+        try {
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            requestIp = IPUtils.getIpAddress(request);
+            logger.info("请求 ip {}", requestIp);
+        } catch (Exception ex) {
+            logger.info("请求 ip 获取失败");
+        }
+
 
         Object result = null;
         LogAuto.ParamPrintOption printOption = logAuto.outParamPrint();
@@ -72,20 +85,20 @@ public class LogAop {
                         methodName, relateId, inParam, printOption.equals(LogAuto.ParamPrintOption.PRINT) ? result : "", lastTime);
             }
 
-            monitor_logger.info("{}|{}|{}|{}|{}|{}|{}|{}|{}", className, methodName, relateId, "uid/设备ID", logAuto.value(), ip_address, inParam, "T", lastTime);
+            monitor_logger.info("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", requestIp, className, methodName, relateId, "uid/设备ID", logAuto.value(), ip_address, inParam, "T", lastTime);
 
         } catch (CommonException ex) {
             LogUtil.error(logger, ex, "{0}.{1}:{2} 执行报错,入参: {3}", pjp.getTarget().getClass().getName(),
                     pjp.getSignature().getName(), relateId, Arrays.toString(pjp.getArgs()));
 
-            monitor_logger.info("{}|{}|{}|{}|{}|{}|{}|{}|{}", className, methodName, relateId, "uid/设备ID", logAuto.value(), ip_address, inParam, "T", 0);
+            monitor_logger.info("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", requestIp, className, methodName, relateId, "uid/设备ID", logAuto.value(), ip_address, inParam, "T", 0);
 
             throw ex;
         } catch (Throwable throwable) {
             LogUtil.error(logger, throwable, "{0}.{1}:{2} 执行报错,入参: {3}", pjp.getTarget().getClass().getName(),
                     pjp.getSignature().getName(), relateId, Arrays.toString(pjp.getArgs()));
 
-            monitor_logger.info("{}|{}|{}|{}|{}|{}|{}|{}|{}", className, methodName, relateId, "uid/设备ID", logAuto.value(), ip_address, inParam, "F", 0);
+            monitor_logger.info("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", requestIp, className, methodName, relateId, "uid/设备ID", logAuto.value(), ip_address, inParam, "F", 0);
 
             throw throwable;
         }

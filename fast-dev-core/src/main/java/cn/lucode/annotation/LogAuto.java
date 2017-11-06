@@ -7,7 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * Created by yunfeng.lu on 2017/9/18.
- */@Retention(RetentionPolicy.RUNTIME)
+ */
+@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface LogAuto {
     public  String  value()  default "";
