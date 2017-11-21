@@ -14,8 +14,8 @@ public class CommonResponseModel {
         if(data==null){
             data=new HashMap();
         }
-        data.put("errCode", code.getCode());
-        data.put("errMsg", code.getMsg());
+        data.put("resCode", code.getCode());
+        data.put("resMsg", code.getMsg());
         this.data = data;
     }
 
@@ -23,8 +23,8 @@ public class CommonResponseModel {
         if(data==null){
             data=new HashMap();
         }
-        data.put("errCode", code);
-        data.put("errMsg", msg);
+        data.put("resCode", code);
+        data.put("resMsg", msg);
         this.data = data;
     }
 

@@ -1,5 +1,6 @@
 package cn.lucode.util;
 
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,6 +15,10 @@ import java.util.regex.Pattern;
  */
 
 public class StringUtil {
+
+    public static boolean isEmpty(String str) {
+        return str == null || str.length() == 0;
+    }
 
     public static boolean isNil(Object src) {
         return src == null || "".equals(src.toString().trim());

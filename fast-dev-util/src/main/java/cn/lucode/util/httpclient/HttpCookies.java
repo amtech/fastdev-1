@@ -7,9 +7,6 @@ import org.apache.http.impl.client.BasicCookieStore;
 /**
  * Created by yunfeng.lu on 2017/10/3.
  */
-
-
-
 public class HttpCookies {
 
     /**

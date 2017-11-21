@@ -28,7 +28,6 @@ public class MyBatisConfig {
     @Bean
     public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
 
-
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setPlugins( new Interceptor[]{pageHelper});
