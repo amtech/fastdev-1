@@ -1,6 +1,6 @@
-import cn.lucode.exception.HttpProcessException;
-import cn.lucode.util.UserAgentUtils;
-import cn.lucode.util.httpclient.*;
+import cn.lucode.fastdev.exception.HttpProcessException;
+import cn.lucode.fastdev.util.UserAgentUtils;
+import cn.lucode.fastdev.util.httpclient.*;
 import org.apache.http.Header;
 import org.apache.http.client.HttpClient;
 import org.junit.Test;
