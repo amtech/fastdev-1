@@ -4,11 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by yunfeng.lu on 2017/9/18.
  */
-
+@Configuration
 public class ServletInitializer extends SpringBootServletInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(ServletInitializer.class);
