@@ -18,7 +18,7 @@ public enum ReturnCodeModel {
     // 登陆 用户相关
     UNAUTHORIZED("2007", "无效的认证"),
     AUTHTOKEN_INVALID("2008", "AUTH TOKEN失效，登陆过期"),
-    DEVICE_INVALID("2009", "终端失效"),
+    DEVICE_INVALID("2009", "终端、ip 不一致"),
     SMS_LIMIT("2010", "短信数量限制"),
     SMS_ERROR("2011", "短信发送失败"),
     SMS_CHECK_FAIL("2012", "短信验证失败"),

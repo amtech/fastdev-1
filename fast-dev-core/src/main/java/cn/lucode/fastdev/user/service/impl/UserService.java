@@ -5,4 +5,5 @@ package cn.lucode.fastdev.user.service.impl;
  * @create 2017/12/4.
  */
 public interface UserService {
+
 }

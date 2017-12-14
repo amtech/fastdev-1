@@ -21,28 +21,10 @@ public class UserCacheUtil {
     @Autowired
     private IRedisOperation redisOperation;
 
-    private String KNOWN="known";
-
     /**
-     * 保存登录状态缓存,1天有效
+     * 保存登录状态缓存,1 小时有效
      */
     public void saveAuthTokenCache(AuthInfoModel authInfoModel) {
-        if (StringUtil.isEmpty(authInfoModel.getDeviceId())){
-            authInfoModel.setDeviceId(KNOWN);
-        }
-        if (StringUtil.isEmpty(authInfoModel.getIdentity())){
-            authInfoModel.setIdentity(KNOWN);
-        }
-        if (StringUtil.isEmpty(authInfoModel.getIp())){
-            authInfoModel.setIp(KNOWN);
-        }
-        if (StringUtil.isEmpty(authInfoModel.getOsType())){
-            authInfoModel.setOsType(KNOWN);
-        }
-        if(StringUtil.isEmpty(authInfoModel.getSourceId())){
-            authInfoModel.setSourceId(KNOWN);
-        }
-
         authInfoModel.setTokenTime(new Date().getTime());
         redisOperation.setValue(OcsParam.AUTH_TOKEN + "_" + authInfoModel.getUserId(),
                 JsonUtil.obj2Json(authInfoModel), OcsParam.OCSPARAM_HOUR);
