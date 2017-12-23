@@ -67,6 +67,7 @@ public class ScheduleUtils {
             
             //暂停任务
             if(scheduleJob.getStatus() == ScheduleStatus.PAUSE.getValue()){
+                LogUtil.info(LOGGER,"初始化任务完成{},该任务被暂停...",scheduleJob.getBeanName());
             	pauseJob(scheduler, scheduleJob.getJobId());
             }
         } catch (SchedulerException e) {

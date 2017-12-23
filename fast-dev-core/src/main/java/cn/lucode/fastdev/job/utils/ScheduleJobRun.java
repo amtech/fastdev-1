@@ -78,6 +78,7 @@ public class ScheduleJobRun extends QuartzJobBean {
 			log.setError(StringUtils.substring(e.toString(), 0, 2000));
 		}finally {
 			try {
+				// 记录执行日志
 				scheduleJobLogService.save(log);
 			} catch (Exception e) {
 				logger.error("任务日志记录失败，任务日志ID：" + log.getJobId(), e);

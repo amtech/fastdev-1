@@ -24,3 +24,36 @@
 ### 1. 如何引入？
 详细见 online_music 项目 暂时没空写
 
+
+####
+
+#### 统一异常
+```
+fastdev : CommonException
+lucode-for-all : LuCodeCommonException
+
+
+```
+#### 统一返回错误码
+```
+ReturnCodeModel
+例如：成功 9999
+```
+
+#### 统一返回模型
+CommonResponseModel
+
+
+#### 文章
+
+```
+增删改查
+2017年12月1日
+```
+
+#### 文件上传
+
+```
+oss 存储完成
+2017年12月23日
+```
