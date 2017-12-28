@@ -29,6 +29,19 @@ public class AuthTokenUtil {
     @Autowired
     private UserCacheUtil userCacheUtil;
 
+    /**
+     * 创建登陆 authToken 并放入缓存
+     *  以下 非必须
+     *  设备号
+     *  身份权限
+     *  登陆 ip
+     *  设备类型
+     *  登陆源
+     *  也就是说 只有 uid是必须
+     *
+     * @param authInfoModel
+     * @return
+     */
     public String createAuthToken(AuthInfoModel authInfoModel) {
         if (StringUtil.isEmpty(authInfoModel.getDeviceId())) {
             authInfoModel.setDeviceId(KNOWN);
@@ -47,7 +60,7 @@ public class AuthTokenUtil {
         }
 
         StringBuilder sb = new StringBuilder();
-        // 四位随机盐
+        // 第零位 四位随机盐
         sb.append(randomStr(4));
         sb.append("__");
         // 第一位 用户 id
@@ -75,8 +88,9 @@ public class AuthTokenUtil {
             byte[] encodeBase64 = Base64.getEncoder()
                     .encode(AESUtil.encrypt(AESUtil.AUTHTOKEN_AES_KEY, sb.toString()).getBytes());
             String result = new String(encodeBase64);
-            // 在这里 保存redis
+            // 用户信息  保存redis
             userCacheUtil.saveAuthTokenCache(authInfoModel);
+            // 返回  加密结果  也就是 authToken
             return result;
         } catch (Exception e) {
             LogUtil.error(logger, e, "创建authToken出错");
@@ -100,7 +114,7 @@ public class AuthTokenUtil {
     }
 
     /**
-     * 通过AuthToken获取用户信息
+     * 通过AuthToken获取用户信息  这个方法不去检查登陆的时效性
      *
      * @param authToken
      * @return

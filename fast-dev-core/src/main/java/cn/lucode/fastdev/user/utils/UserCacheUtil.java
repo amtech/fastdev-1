@@ -22,7 +22,7 @@ public class UserCacheUtil {
     private IRedisOperation redisOperation;
 
     /**
-     * 保存登录状态缓存,1 小时有效
+     * 保存登录状态缓存,1小时有效
      */
     public void saveAuthTokenCache(AuthInfoModel authInfoModel) {
         authInfoModel.setTokenTime(new Date().getTime());

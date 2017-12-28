@@ -1,16 +1,13 @@
 package cn.lucode.fastdev.user.service;
 
-import org.springframework.stereotype.Service;
+import cn.lucode.fastdev.user.model.LoginReq;
+import cn.lucode.fastdev.user.model.LoginRes;
 
 /**
  * @author yunfeng.lu
  * @create 2017/12/4.
  */
-@Service
-public class UserService {
+public interface UserService {
 
-    public void quickLogin(){
-
-    }
-
+    LoginRes login(LoginReq loginReq);
 }

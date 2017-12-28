@@ -19,9 +19,11 @@ public enum ReturnCodeModel {
     SCHEDULE_JOB_ERROR("0006","执行定时任务失败"),
 
     // 登陆 用户相关
-    UNAUTHORIZED("2007", "无效的认证"),
-    AUTHTOKEN_INVALID("2008", "AUTH TOKEN失效，登陆过期"),
-    DEVICE_INVALID("2009", "终端、ip 不一致"),
+    UNAUTHORIZED("2001", "无效的认证"),
+    AUTHTOKEN_INVALID("2002", "AUTH TOKEN失效，登陆过期"),
+    DEVICE_INVALID("2003", "终端、ip 不一致"),
+    NOT_GENERATED_PASSWORD("2004", "您上次登陆方式为快捷登录，未设置过密码，先用快捷登录，设置密码，再使用密码登陆"),
+    PASSWORDERROR("2005","密码错误!"),
 
     // 文件处理
     FILEDIRCREATE("2101","系统文件创建失败");

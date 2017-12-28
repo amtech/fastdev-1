@@ -51,7 +51,7 @@ public class PasswordUtil {
 
     public static void main(String[] args) {
         PasswordUtil passwordUtil=new PasswordUtil();
-        String pwd="1233";
+        String pwd="lucode123";
         String has=passwordUtil.createPassword(pwd);
         System.out.println("加密后"+has);
         System.out.println("解密后"+passwordUtil.checkLogin(pwd,has));
