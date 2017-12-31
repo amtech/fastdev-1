@@ -5,7 +5,8 @@ package cn.lucode.fastdev.common;
  * @create 2017/10/26.
  */
 public enum  CommonBizTypeCode {
-    BIZ_JOB("0001", "定时任务");
+    BIZ_JOB("0001", "定时任务"),
+    BIZ_USER("0002","用户模块");
 
     private String code;
     private String desc;

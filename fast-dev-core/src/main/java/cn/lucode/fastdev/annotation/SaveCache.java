@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 注解完成 缓存
  * @author yunfeng.lu
  * @create 2017/11/6.
  */

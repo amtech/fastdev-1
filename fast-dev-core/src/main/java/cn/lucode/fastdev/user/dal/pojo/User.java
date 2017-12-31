@@ -1,22 +1,23 @@
-package cn.lucode.fastdev.user.model;
-
-import cn.lucode.fastdev.user.dal.pojo.User;
+package cn.lucode.fastdev.user.dal.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
- * @author yunfeng.lu
- * @create 2017/12/24.
+ * @author 
  */
-public class UserInfoModel implements Serializable{
-    private static final long serialVersionUID = -2992913120247672694L;
-
+public class User implements Serializable {
     private String userId;
 
     /**
      * 登陆名
      */
     private String loginName;
+
+    /**
+     * 登陆密码
+     */
+    private String password;
 
     /**
      * 用户昵称
@@ -53,22 +54,11 @@ public class UserInfoModel implements Serializable{
      */
     private Integer userEnableStatus;
 
-    public static UserInfoModel pojo2Model(User user){
-        if(user==null){
-            return null;
-        }
-        UserInfoModel model=new UserInfoModel();
-        model.setUserId(user.getUserId());
-        model.setAvatar(user.getAvatar());
-        model.setNickname(user.getNickname());
-        model.setGender(user.getGender());
-        model.setLoginName(user.getLoginName());
-        model.setUserEmail(user.getUserEmail());
-        model.setUserMobile(user.getUserMobile());
-        model.setUserRoleId(user.getUserRoleId());
-        model.setUserEnableStatus(user.getUserEnableStatus());
-        return model;
-    }
+    private Date gmtModify;
+
+    private Date gmtCreate;
+
+    private static final long serialVersionUID = 1L;
 
     public String getUserId() {
         return userId;
@@ -84,6 +74,14 @@ public class UserInfoModel implements Serializable{
 
     public void setLoginName(String loginName) {
         this.loginName = loginName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getNickname() {
@@ -140,5 +138,21 @@ public class UserInfoModel implements Serializable{
 
     public void setUserEnableStatus(Integer userEnableStatus) {
         this.userEnableStatus = userEnableStatus;
+    }
+
+    public Date getGmtModify() {
+        return gmtModify;
+    }
+
+    public void setGmtModify(Date gmtModify) {
+        this.gmtModify = gmtModify;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
     }
 }

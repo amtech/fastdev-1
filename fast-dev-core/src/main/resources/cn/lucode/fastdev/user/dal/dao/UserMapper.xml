@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lucode.fastdev.user.dal.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.lucode.fastdev.user.dal.pojo.User">
+        <id column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+        <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+        <result column="gender" jdbcType="VARCHAR" property="gender" />
+        <result column="user_role_id" jdbcType="VARCHAR" property="userRoleId" />
+        <result column="user_mobile" jdbcType="VARCHAR" property="userMobile" />
+        <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+        <result column="user_enable_status" jdbcType="INTEGER" property="userEnableStatus" />
+        <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        user_id, login_name, password, nickname, avatar, gender, user_role_id, user_mobile,
+        user_email, user_enable_status, gmt_modify, gmt_create
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from user
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="cn.lucode.fastdev.user.dal.pojo.User">
+        insert into user (user_id, login_name, password,
+        nickname, avatar, gender,
+        user_role_id, user_mobile, user_email,
+        user_enable_status, gmt_modify, gmt_create
+        )
+        values (#{userId,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{nickname,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR},
+        #{userRoleId,jdbcType=VARCHAR}, #{userMobile,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},
+        #{userEnableStatus,jdbcType=INTEGER}, #{gmtModify,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.lucode.fastdev.user.dal.pojo.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="loginName != null">
+                login_name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="userRoleId != null">
+                user_role_id,
+            </if>
+            <if test="userMobile != null">
+                user_mobile,
+            </if>
+            <if test="userEmail != null">
+                user_email,
+            </if>
+            <if test="userEnableStatus != null">
+                user_enable_status,
+            </if>
+            <if test="gmtModify != null">
+                gmt_modify,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null">
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="userRoleId != null">
+                #{userRoleId,jdbcType=VARCHAR},
+            </if>
+            <if test="userMobile != null">
+                #{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null">
+                #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="userEnableStatus != null">
+                #{userEnableStatus,jdbcType=INTEGER},
+            </if>
+            <if test="gmtModify != null">
+                #{gmtModify,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.lucode.fastdev.user.dal.pojo.User">
+        update user
+        <set>
+            <if test="loginName != null">
+                login_name = #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="userRoleId != null">
+                user_role_id = #{userRoleId,jdbcType=VARCHAR},
+            </if>
+            <if test="userMobile != null">
+                user_mobile = #{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null">
+                user_email = #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="userEnableStatus != null">
+                user_enable_status = #{userEnableStatus,jdbcType=INTEGER},
+            </if>
+            <if test="gmtModify != null">
+                gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.lucode.fastdev.user.dal.pojo.User">
+        update user
+        set login_name = #{loginName,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        nickname = #{nickname,jdbcType=VARCHAR},
+        avatar = #{avatar,jdbcType=VARCHAR},
+        gender = #{gender,jdbcType=VARCHAR},
+        user_role_id = #{userRoleId,jdbcType=VARCHAR},
+        user_mobile = #{userMobile,jdbcType=VARCHAR},
+        user_email = #{userEmail,jdbcType=VARCHAR},
+        user_enable_status = #{userEnableStatus,jdbcType=INTEGER},
+        gmt_modify = #{gmtModify,jdbcType=TIMESTAMP},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </update>
+
+
+
+    <select id="selectByLoginName" resultType="cn.lucode.fastdev.user.dal.pojo.User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where login_name = #{loginName,jdbcType=VARCHAR}
+    </select>
+</mapper>

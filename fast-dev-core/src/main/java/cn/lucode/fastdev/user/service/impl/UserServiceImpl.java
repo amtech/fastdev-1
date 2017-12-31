@@ -3,6 +3,8 @@ package cn.lucode.fastdev.user.service.impl;
 import cn.lucode.fastdev.annotation.CommonAppCode;
 import cn.lucode.fastdev.annotation.LogAuto;
 import cn.lucode.fastdev.common.ReturnCodeModel;
+import cn.lucode.fastdev.user.dal.dao.UserMapper;
+import cn.lucode.fastdev.user.dal.pojo.User;
 import cn.lucode.fastdev.user.model.AuthInfoModel;
 import cn.lucode.fastdev.user.model.LoginReq;
 import cn.lucode.fastdev.user.model.LoginRes;
@@ -29,86 +31,107 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AuthTokenUtil authTokenUtil;
 
-    public Object quickLogin(){
+    @Autowired
+    private UserMapper userMapper;
+
+
+    public Object quickLogin() {
         return null;
 
     }
 
     @Override
     @LogAuto(CommonAppCode.FastDevApp)
-    public LoginRes login(LoginReq loginReq){
+    public LoginRes login(LoginReq loginReq) {
 
-        if(StringUtil.isNil(loginReq.getLoginName())||
-           StringUtil.isNil(loginReq.getPassword())){
+        if (StringUtil.isNil(loginReq.getLoginName()) ||
+                StringUtil.isNil(loginReq.getPassword())) {
 
             throw new UserException(ReturnCodeModel.PARAMETER_IS_MISSING);
 
         }
         //根据用户名查询 用户信息
-        loginReq.getLoginName();
+        User user = userMapper.selectByLoginName(loginReq.getLoginName());
 
-        String pwd="$#@&8froo4ln4875f7e508e1d20c4d5e5d";
+        if(user == null){
+            throw new UserException(ReturnCodeModel.NOT_REGIST);
 
-        if(StringUtil.isNil(pwd)){
+        }
+
+        if (StringUtil.isNil(user.getPassword())) {
 
             throw new UserException(ReturnCodeModel.NOT_GENERATED_PASSWORD);
 
         }
 
         // 验证密码
-        boolean checkFlg = passwordUtil.checkLogin(loginReq.getPassword(), pwd);
+        boolean checkFlg = passwordUtil.checkLogin(loginReq.getPassword(), user.getPassword());
 
-        if(!checkFlg){
-            // todo 记录登陆失败日志
+        if (!checkFlg) {
+            // TODO 记录登陆失败日志
 
             // 登陆 失败 抛出 异常
             throw new UserException(ReturnCodeModel.PASSWORDERROR);
 
         }
 
-        String uid=UUIDGenerator.generate();
+        String uid = user.getUserId();
 
-        // 记录登陆成功日志
+        // TODO 记录登陆成功日志
 
-        // 查用户的个人信息
-        UserInfoModel userInfoModel=new UserInfoModel();
-
-        userInfoModel.setUserId(uid);
+        // 用户的个人信息封装成 model
+        UserInfoModel userInfoModel = UserInfoModel.pojo2Model(user);
 
         // 得到 authToken
-        AuthInfoModel authInfoModel=new AuthInfoModel();
+        AuthInfoModel authInfoModel = new AuthInfoModel();
 
         authInfoModel.setUserId(uid);
 
         authInfoModel.setOsType("mac");
 
-        String authToken=authTokenUtil.createAuthToken(authInfoModel);
+        String authToken = authTokenUtil.createAuthToken(authInfoModel);
 
-        LoginRes loginRes=new LoginRes();
+        // 封装返回值
+        LoginRes loginRes = new LoginRes();
 
         loginRes.setAuthToken(authToken);
 
         loginRes.setUserInfo(userInfoModel);
+
         return loginRes;
     }
 
 
     /**
      * 得到用户信息  并登陆状态检查
+     *
      * @param authToken
      * @return
      */
-    public UserInfoModel getUserInfo(String authToken){
-        return null;
+    @Override
+    @LogAuto(CommonAppCode.FastDevApp)
+    public UserInfoModel getUserInfo(String authToken) {
+        AuthInfoModel authInfoModel = authTokenUtil.parseAuthToken(authToken);
+        // 登陆失效
+        if (authInfoModel == null) {
+            throw new UserException(ReturnCodeModel.AUTHTOKEN_INVALID);
+        }
+
+        User user = userMapper.selectByPrimaryKey(authInfoModel.getUserId());
+        if (user == null) {
+            throw new UserException(ReturnCodeModel.NO_DATE);
+        }
+        return UserInfoModel.pojo2Model(user);
     }
 
 
     /**
      * 检查登陆状态 返回 用户信息
      * 入参之后会加上 身份 , ip ,设备号的校验 ，防止通过得到 authToken 进行爬虫，或者其他活动
+     *
      * @param authToken
      */
-    public void checkLoginState(String authToken){
+    public void checkLoginState(String authToken) {
         authTokenUtil.parseAuthToken(authToken);
     }
 

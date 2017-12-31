@@ -52,6 +52,15 @@ public class CommonResponseModel {
         return new CommonResponseModel(ReturnCodeModel.SUCCESS, null).getData();
     }
 
+    public static Map success(Object o){
+        Map<String,Object> map=new HashMap<>();
+        map.put("data",o);
+        return new CommonResponseModel(ReturnCodeModel.SUCCESS, map).getData();
+
+    }
+
+
+
     public static Map fail(Map data) {
         return new CommonResponseModel(ReturnCodeModel.FAIL, data).getData();
     }
