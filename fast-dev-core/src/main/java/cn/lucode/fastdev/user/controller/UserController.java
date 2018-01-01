@@ -78,6 +78,31 @@ public class UserController {
     }
 
 
+    @GetMapping("/layout")
+    @ApiOperation(value = "退出登陆状态",response =CommonResponseModel.class)
+    public Object layout(@ApiParam(value = "authToken")
+                             @RequestParam(value = "authToken") String authToken ){
+        try {
+            userService.layout(authToken);
+            return CommonResponseModel.success();
+
+        } catch (UserException ue) {
+
+            LogUtil.error(logger, ue, "{0} 异常，请检查....{1}", CommonBizTypeCode.BIZ_USER.getDesc(),authToken);
+
+            return CommonResponseModel.facade(ue.getException_type());
+
+        } catch (Exception ex) {
+
+            LogUtil.error(logger, ex, "{0} 异常，请检查....{1}",CommonBizTypeCode.BIZ_USER.getDesc(),authToken);
+
+            return CommonResponseModel.fail();
+        }
+
+
+    }
+
+
 
 
 

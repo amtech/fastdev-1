@@ -12,6 +12,7 @@ import cn.lucode.fastdev.user.model.UserInfoModel;
 import cn.lucode.fastdev.user.service.UserService;
 import cn.lucode.fastdev.user.utils.AuthTokenUtil;
 import cn.lucode.fastdev.user.utils.PasswordUtil;
+import cn.lucode.fastdev.user.utils.UserCacheUtil;
 import cn.lucode.fastdev.user.utils.UserException;
 import cn.lucode.fastdev.util.StringUtil;
 import cn.lucode.fastdev.util.UUIDGenerator;
@@ -33,6 +34,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+
+    @Autowired
+    private UserCacheUtil userCacheUtil;
 
 
     public Object quickLogin() {
@@ -125,6 +130,23 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    @LogAuto(CommonAppCode.FastDevApp)
+    public void layout(String authToken) {
+        AuthInfoModel authInfoModel = authTokenUtil.parseAuthToken(authToken);
+        // 登陆失效
+        if (authInfoModel == null) {
+            throw new UserException(ReturnCodeModel.AUTHTOKEN_INVALID);
+        }
+
+        userCacheUtil.delAuthTokenCache(authInfoModel.getUserId());
+
+    }
+
+
+
+
+
     /**
      * 检查登陆状态 返回 用户信息
      * 入参之后会加上 身份 , ip ,设备号的校验 ，防止通过得到 authToken 进行爬虫，或者其他活动
@@ -134,5 +156,7 @@ public class UserServiceImpl implements UserService {
     public void checkLoginState(String authToken) {
         authTokenUtil.parseAuthToken(authToken);
     }
+
+
 
 }

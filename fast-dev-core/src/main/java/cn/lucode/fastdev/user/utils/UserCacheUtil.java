@@ -45,4 +45,9 @@ public class UserCacheUtil {
     }
 
 
+    public void delAuthTokenCache(String userId){
+        redisOperation.removeV(OcsParam.AUTH_TOKEN + "_" + userId);
+    }
+
+
 }

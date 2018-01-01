@@ -14,4 +14,7 @@ public interface UserService {
 
 
     UserInfoModel getUserInfo(String authToken);
+
+
+    void layout(String authToken);
 }
