@@ -1,7 +1,9 @@
 package cn.lucode.fastdev.monitor.controller;
 
+import cn.lucode.fastdev.common.CommonResponseModel;
 import cn.lucode.fastdev.monitor.service.JvmInfoService;
 import cn.lucode.fastdev.util.JsonUtil;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,23 +16,20 @@ import java.util.ArrayList;
  * @create 2018/1/2.
  */
 @RestController
+@Api("jvm")
 public class JvmInfoController {
 
     @Autowired
     private JvmInfoService jvmInfoService;
 
-    @RequestMapping(value = "/jvminfo/getInfo")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    String rmLocal(HttpServletRequest request) throws Exception {
-        return JsonUtil.obj2Json(jvmInfoService.getJvm());
+    @GetMapping(value = "/jvminfo/getInfo")
+    public Object rmLocal() throws Exception {
+       return CommonResponseModel.success(jvmInfoService.getJvm());
 
     }
 
-    @RequestMapping(value = "/cache/testbyte/{key}")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    String rmLocal(HttpServletRequest request, @PathVariable("key") long key) {
+    @GetMapping(value = "/cache/testbyte/{key}")
+    public String rmLocal(@PathVariable("key") long key) {
         ArrayList a = new ArrayList();
         for (long i = 0; i < key; i++) {
             Byte[] bytes = new Byte[1024 * 1024 * 10];
@@ -39,6 +38,5 @@ public class JvmInfoController {
         System.gc();
         return "success";
     }
-
 
 }

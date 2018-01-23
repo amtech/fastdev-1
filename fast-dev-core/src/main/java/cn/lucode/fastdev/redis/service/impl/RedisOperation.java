@@ -14,20 +14,20 @@ import java.util.concurrent.TimeUnit;
  * Created by yunfeng.lu on 2017/10/4.
  */
 @Service
-public class RedisOperation implements IRedisOperation{
-    private static final long DEFAULT_REDIS_KEYS_TIMEOUT = 60*60*24*7;
+public class RedisOperation implements IRedisOperation {
+    private static final long DEFAULT_REDIS_KEYS_TIMEOUT = 60 * 60 * 24 * 7;
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public void setValue(String key, String value) {
-        this.setValue(key,value,DEFAULT_REDIS_KEYS_TIMEOUT);
+        this.setValue(key, value, DEFAULT_REDIS_KEYS_TIMEOUT);
     }
 
     @Override
     public void setValue(String key, String value, Long timeout) {
-        stringRedisTemplate.opsForValue().set(key, value, timeout , TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
     }
 
     @Override
@@ -49,14 +49,13 @@ public class RedisOperation implements IRedisOperation{
     @Override
     public void setSetValue(String key, Long timeout, String... values) {
 
-        if(timeout == null)
-        {
+        if (timeout == null) {
             timeout = DEFAULT_REDIS_KEYS_TIMEOUT;
         }
 
-        stringRedisTemplate.opsForSet().add(key,values);
+        stringRedisTemplate.opsForSet().add(key, values);
 
-        stringRedisTemplate.expire(key,timeout,TimeUnit.SECONDS);
+        stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
     }
 
     @Override
@@ -65,18 +64,26 @@ public class RedisOperation implements IRedisOperation{
     }
 
     @Override
-    public void setHashValue(String key, String hashKey, String hashValue) {
-        stringRedisTemplate.opsForHash().put(key,hashKey,hashValue);
+    public void setHashValue(String key, String hashKey, String hashValue, Long timeout) {
+        stringRedisTemplate.opsForHash().put(key, hashKey, hashValue);
+        stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
     }
+
+    @Override
+    public void setHashValue(String key, String hashKey, String hashValue) {
+        stringRedisTemplate.opsForHash().put(key, hashKey, hashValue);
+        stringRedisTemplate.expire(key, DEFAULT_REDIS_KEYS_TIMEOUT, TimeUnit.SECONDS);
+    }
+
 
     @Override
     public String getHashValue(String key, String hashKey) {
-        return String.valueOf(stringRedisTemplate.opsForHash().get(key,hashKey));
+        return String.valueOf(stringRedisTemplate.opsForHash().get(key, hashKey));
     }
 
     @Override
-    public  List mutiGetHashValue(String key, List hashKeys) {
-        return stringRedisTemplate.opsForHash().multiGet(key,hashKeys);
+    public List mutiGetHashValue(String key, List hashKeys) {
+        return stringRedisTemplate.opsForHash().multiGet(key, hashKeys);
     }
 
     @Override
@@ -86,6 +93,6 @@ public class RedisOperation implements IRedisOperation{
 
     @Override
     public void removeHashEntry(String key, String... hashKey) {
-        stringRedisTemplate.opsForHash().delete(key,hashKey);
+        stringRedisTemplate.opsForHash().delete(key, hashKey);
     }
 }

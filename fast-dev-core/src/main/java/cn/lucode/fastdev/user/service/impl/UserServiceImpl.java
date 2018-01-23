@@ -123,6 +123,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = userMapper.selectByPrimaryKey(authInfoModel.getUserId());
+
         if (user == null) {
             throw new UserException(ReturnCodeModel.NO_DATE);
         }
