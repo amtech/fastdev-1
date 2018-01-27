@@ -18,6 +18,7 @@ public class MybatisPageHelperConfig {
         Properties p = new Properties();
         p.setProperty("offsetAsPageNum", "true");
         p.setProperty("rowBoundsWithCount", "true");
+        // 一般用于超过这个页数是否显示数据的
         p.setProperty("reasonable", "true");
         pageHelper.setProperties(p);
         return pageHelper;
