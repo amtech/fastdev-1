@@ -227,10 +227,11 @@ public class UUIDGenerator {
 
     public static void main(String[] args) {
         try {
-            System.out.println(InetAddress.getLocalHost().getHostAddress());
+            for(int i=1;i<1560;i++){
+                System.out.println(UUIDGenerator.generate());
+            }
 
-            //System.out.println(Arrays.toString(ip_bytes));
-            System.out.println(formatIp());
+
         } catch (Exception e) {
             e.printStackTrace();
         }

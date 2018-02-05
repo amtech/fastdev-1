@@ -38,7 +38,7 @@
 		<!--httpClient-->
 		<httpclient.version>4.4.1</httpclient.version>
 		<httpasyncclient.version>4.1</httpasyncclient.version>
-		<hutool-all.version>3.2.2</hutool-all.version>
+		<hutool-all.version>4.0.3</hutool-all.version>
 		<!--sdk 环境-->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -162,7 +162,7 @@
 				<version>${httpasyncclient.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.xiaoleilu</groupId>
+				<groupId>cn.hutool</groupId>
 				<artifactId>hutool-all</artifactId>
 				<version>${hutool-all.version}</version>
 			</dependency>

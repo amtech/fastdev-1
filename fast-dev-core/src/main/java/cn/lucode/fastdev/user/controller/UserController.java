@@ -3,6 +3,7 @@ package cn.lucode.fastdev.user.controller;
 import cn.lucode.fastdev.common.CommonBizTypeCode;
 import cn.lucode.fastdev.common.CommonResponseModel;
 import cn.lucode.fastdev.user.model.LoginReq;
+import cn.lucode.fastdev.user.model.RegisterReq;
 import cn.lucode.fastdev.user.service.UserService;
 import cn.lucode.fastdev.user.utils.UserException;
 import cn.lucode.fastdev.util.LogUtil;
@@ -53,6 +54,28 @@ public class UserController {
         }
 
     }
+
+    @PostMapping("/register")
+    @ApiOperation(value = "注册",response =CommonResponseModel.class)
+    public Object register(RegisterReq registerReq){
+        try {
+
+            return CommonResponseModel.success(userService.register(registerReq));
+
+        } catch (UserException ue) {
+
+            LogUtil.error(logger, ue, "{0} 异常，请检查....{1}", CommonBizTypeCode.BIZ_USER.getDesc(),registerReq);
+
+            return CommonResponseModel.facade(ue.getException_type());
+
+        } catch (Exception ex) {
+
+            LogUtil.error(logger, ex, "{0} 异常，请检查....{1}",CommonBizTypeCode.BIZ_USER.getDesc(),registerReq);
+
+            return CommonResponseModel.fail();
+        }
+    }
+
 
     @GetMapping("/getUserInfo")
     @ApiOperation(value = "得到用户信息，检查登录态",response =CommonResponseModel.class)

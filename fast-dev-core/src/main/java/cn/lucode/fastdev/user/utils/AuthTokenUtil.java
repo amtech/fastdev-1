@@ -94,7 +94,7 @@ public class AuthTokenUtil {
             return result;
         } catch (Exception e) {
             LogUtil.error(logger, e, "创建authToken出错");
-            throw new UserException(ReturnCodeModel.UNAUTHORIZED);
+            throw new UserException(ReturnCodeModel.SERVER_ERROR);
         }
     }
 

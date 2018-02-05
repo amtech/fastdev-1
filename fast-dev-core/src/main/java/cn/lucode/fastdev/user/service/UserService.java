@@ -1,8 +1,6 @@
 package cn.lucode.fastdev.user.service;
 
-import cn.lucode.fastdev.user.model.LoginReq;
-import cn.lucode.fastdev.user.model.LoginRes;
-import cn.lucode.fastdev.user.model.UserInfoModel;
+import cn.lucode.fastdev.user.model.*;
 
 /**
  * @author yunfeng.lu
@@ -11,6 +9,8 @@ import cn.lucode.fastdev.user.model.UserInfoModel;
 public interface UserService {
 
     LoginRes login(LoginReq loginReq);
+
+    RegisterRes register(RegisterReq registerReq);
 
 
     UserInfoModel getUserInfo(String authToken);

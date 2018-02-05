@@ -155,4 +155,6 @@ public class User implements Serializable {
     public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
+
+
 }
