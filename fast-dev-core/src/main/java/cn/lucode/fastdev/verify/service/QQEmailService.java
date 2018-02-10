@@ -1,6 +1,7 @@
 package cn.lucode.fastdev.verify.service;
 
 import cn.lucode.fastdev.enums.TemplateType;
+import cn.lucode.fastdev.threadpool.DefaultPoolManager;
 import cn.lucode.fastdev.util.HTMLTemplateUtils;
 import cn.lucode.fastdev.verify.EmailModel;
 import org.slf4j.Logger;
@@ -34,19 +35,8 @@ public class QQEmailService {
     @Autowired
     private HTMLTemplateUtils htmlTemplateUtils;
 
-    private ThreadPoolExecutor threadPoolExecutor;
-
-    @PostConstruct
-    public void init() {
-        Integer poolNumInit = 40;
-        Integer queueNumInit = 200;
-
-        threadPoolExecutor = new ThreadPoolExecutor(
-                poolNumInit, poolNumInit, 1000L,
-                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(queueNumInit),
-                new ThreadPoolExecutor.AbortPolicy());
-
-    }
+    @Autowired
+    DefaultPoolManager defaultPoolManager;
 
 
     /**
@@ -55,6 +45,7 @@ public class QQEmailService {
      */
     public void sendAttachmentsMail(EmailModel emailModel) throws Exception {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
+
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
         helper.setFrom(emailModel.getSender());
         helper.setTo(emailModel.getReceiver());
@@ -62,9 +53,12 @@ public class QQEmailService {
         Map<String, Object> params = new HashMap<>();
         params.put("name", emailModel.getReceiver());
         params.put("url", emailModel.getUrl());
-        helper.setText(htmlTemplateUtils.render(emailModel.getTemplateType(), params));
-        // 采用异步方式
-        mailSender.send(mimeMessage);
+        helper.setText(htmlTemplateUtils.render(emailModel.getTemplateType(), params),true);
+        defaultPoolManager.getAnsycTaskExecutor().execute(() -> {
+            // 采用异步方式
+            mailSender.send(mimeMessage);
+        });
+
     }
 
 

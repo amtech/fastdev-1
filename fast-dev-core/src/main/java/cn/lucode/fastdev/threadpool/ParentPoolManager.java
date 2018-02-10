@@ -10,9 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.RejectedExecutionHandler;
 
-import static cn.lucode.fastdev.threadpool.ThreadPoolCommons.ALIVETIME;
-import static cn.lucode.fastdev.threadpool.ThreadPoolCommons.ASSERT_POOL_NULL;
-import static cn.lucode.fastdev.threadpool.ThreadPoolCommons.ASSERT_POOL_SN;
+import static cn.lucode.fastdev.threadpool.ThreadPoolCommons.*;
 
 
 /**
@@ -23,9 +21,9 @@ public abstract class ParentPoolManager {
 
     private final static Logger logger = LoggerFactory.getLogger(ParentPoolManager.class);
 
-    private static Map<String, ThreadPoolTaskExecutor> poolContainer = new ConcurrentHashMap();
+    public static Map<String, ThreadPoolTaskExecutor> poolContainer = new ConcurrentHashMap();
 
-    private static int nowMaxThreadSize = 0;
+    public static int nowMaxThreadSize = 0;
 
     public ThreadPoolTaskExecutor createPool(String name, int corePoolSize, int maxPoolSize, int queueCapacity) {
         return registerPool(name, initPool(name, corePoolSize, maxPoolSize, queueCapacity));

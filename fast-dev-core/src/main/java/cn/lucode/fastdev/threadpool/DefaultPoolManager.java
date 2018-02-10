@@ -49,6 +49,21 @@ public class DefaultPoolManager extends ParentPoolManager {
         }
     }
 
+    /**
+     * 获取异步线程池 
+     * @return
+     */
+    public ThreadPoolTaskExecutor getAnsycTaskExecutor() {
+        if (!poolContainer.containsKey(ASYNC_POOL)) {
+            // 在获取不到的情况下重新创建新的 异步线程池，保证服务的高可用
+            registerPool(ASYNC_POOL, ansycTaskExecutor);
+            // 系统需要保存当前 最大 线程数
+            plusMax(ansycTaskExecutor.getMaxPoolSize());
+            
+        }
+        return poolContainer.get(ASYNC_POOL);
+    }
+
 
     /**
      * 新创建线程池 需要检查 最大线程数
