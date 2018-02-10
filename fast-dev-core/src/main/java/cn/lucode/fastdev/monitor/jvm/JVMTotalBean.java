@@ -1,4 +1,4 @@
-package cn.lucode.fastdev.monitor;
+package cn.lucode.fastdev.monitor.jvm;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

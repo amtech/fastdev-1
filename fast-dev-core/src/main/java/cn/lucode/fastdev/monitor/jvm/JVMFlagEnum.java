@@ -1,4 +1,4 @@
-package cn.lucode.fastdev.monitor;
+package cn.lucode.fastdev.monitor.jvm;
 
 /**
  * @author yunfeng.lu

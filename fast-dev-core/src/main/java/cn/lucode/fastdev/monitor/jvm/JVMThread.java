@@ -1,4 +1,4 @@
-package cn.lucode.fastdev.monitor;
+package cn.lucode.fastdev.monitor.jvm;
 
 import com.sun.management.OperatingSystemMXBean;
 

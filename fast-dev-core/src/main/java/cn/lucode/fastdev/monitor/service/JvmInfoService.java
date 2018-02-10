@@ -1,8 +1,8 @@
 package cn.lucode.fastdev.monitor.service;
 
-import cn.lucode.fastdev.monitor.JVMFlagEnum;
-import cn.lucode.fastdev.monitor.JVMTotalBean;
-import cn.lucode.fastdev.monitor.JvmRuleConfig;
+import cn.lucode.fastdev.monitor.jvm.JVMFlagEnum;
+import cn.lucode.fastdev.monitor.jvm.JVMTotalBean;
+import cn.lucode.fastdev.monitor.jvm.JvmRuleConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

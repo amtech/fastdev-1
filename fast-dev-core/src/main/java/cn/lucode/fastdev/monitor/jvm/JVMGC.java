@@ -1,4 +1,4 @@
-package cn.lucode.fastdev.monitor;
+package cn.lucode.fastdev.monitor.jvm;
 
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
