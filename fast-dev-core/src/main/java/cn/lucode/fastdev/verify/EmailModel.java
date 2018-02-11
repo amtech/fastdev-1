@@ -13,6 +13,8 @@ public class EmailModel {
      * 回调参数
      */
     private String url;
+
+    private String verifCode;
     /**
      * email 模板类型
      */
@@ -21,23 +23,20 @@ public class EmailModel {
     private String receiver;
     private Map<String,Object> exendParam;
 
-    @Override
-    public String toString() {
-        return "EmailModel{" +
-                "url='" + url + '\'' +
-                ", templateType=" + templateType +
-                ", sender='" + sender + '\'' +
-                ", receiver='" + receiver + '\'' +
-                ", exendParam=" + exendParam +
-                '}';
-    }
-
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getVerifCode() {
+        return verifCode;
+    }
+
+    public void setVerifCode(String verifCode) {
+        this.verifCode = verifCode;
     }
 
     public TemplateType getTemplateType() {
@@ -70,5 +69,17 @@ public class EmailModel {
 
     public void setExendParam(Map<String, Object> exendParam) {
         this.exendParam = exendParam;
+    }
+
+    @Override
+    public String toString() {
+        return "EmailModel{" +
+                "url='" + url + '\'' +
+                ", verifCode='" + verifCode + '\'' +
+                ", templateType=" + templateType +
+                ", sender='" + sender + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", exendParam=" + exendParam +
+                '}';
     }
 }

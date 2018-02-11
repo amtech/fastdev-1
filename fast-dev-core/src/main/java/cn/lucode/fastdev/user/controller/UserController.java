@@ -55,12 +55,32 @@ public class UserController {
 
     }
 
-    @PostMapping("/register")
-    @ApiOperation(value = "注册",response =CommonResponseModel.class)
-    public Object register(RegisterReq registerReq){
+    @PostMapping("/registerStep1")
+    @ApiOperation(value = "注册第一步",response =CommonResponseModel.class)
+    public Object register1(RegisterReq registerReq){
         try {
+            return CommonResponseModel.success(userService.registerStep1(registerReq));
 
-            return CommonResponseModel.success(userService.register(registerReq));
+        } catch (UserException ue) {
+
+            LogUtil.error(logger, ue, "{0} 异常，请检查....{1}", CommonBizTypeCode.BIZ_USER.getDesc(),registerReq);
+
+            return CommonResponseModel.facade(ue.getException_type());
+
+        } catch (Exception ex) {
+
+            LogUtil.error(logger, ex, "{0} 异常，请检查....{1}",CommonBizTypeCode.BIZ_USER.getDesc(),registerReq);
+
+            return CommonResponseModel.fail();
+        }
+    }
+
+    @PostMapping("/registerStep2")
+    @ApiOperation(value = "注册第二步",response =CommonResponseModel.class)
+    public Object register2(RegisterReq registerReq){
+        try {
+            userService.registerStep2(registerReq);
+            return CommonResponseModel.success();
 
         } catch (UserException ue) {
 

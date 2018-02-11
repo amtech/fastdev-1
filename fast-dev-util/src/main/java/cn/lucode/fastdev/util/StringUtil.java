@@ -71,10 +71,8 @@ public class StringUtil {
     /**
      * 提供精确的加法运算。
      *
-     * @param v1
-     *            被加数
-     * @param v2
-     *            加数
+     * @param v1 被加数
+     * @param v2 加数
      * @return 两个参数的和
      */
 
@@ -104,14 +102,9 @@ public class StringUtil {
     }
 
     /**
-     *
-     *
-     * @param text
-     *            报文信息 填充位置 0在前 1在后
+     * @param text        报文信息 填充位置 0在前 1在后
      * @param msgLenRange
-     *
-     * @param msgLenSize
-     *            报文长度的长度
+     * @param msgLenSize  报文长度的长度
      */
     public static int getLen(String text, int msgLenRange, int msgLenSize) {
         if (text != null) {
@@ -178,12 +171,9 @@ public class StringUtil {
     /**
      * 按长度补足字符数据项
      *
-     * @param needlen
-     *            报文长度规定的字符数
-     * @param pack
-     *            填充字符
-     * @param direction
-     *            填充位置 0在前 1在后
+     * @param needlen   报文长度规定的字符数
+     * @param pack      填充字符
+     * @param direction 填充位置 0在前 1在后
      * @return
      */
     public static String replenishString(Object obj, Integer needlen, char pack, int direction) {
@@ -490,6 +480,7 @@ public class StringUtil {
         }
         return sb.toString();
     }
+
     /**
      * @功能: BCD码转为10进制串(阿拉伯数据)
      * @参数: BCD码
@@ -505,15 +496,25 @@ public class StringUtil {
                 .toString().substring(1) : temp.toString();
     }
 
-//    public static  String readBytesToHexString(byte[] bytes,ByteDataBuffer bdf) throws Exception {
-//
-//        for (int i = 0; i < bytes.length; i++) {
-//            byte b = bdf.readInt8();
-//            bytes[i] = b;
-//        }
-//        String msg = StringUtil.bytesToHexString(bytes);
-//        return msg;
-//
-//    }
+    /**
+     * 邮箱工具 获取邮箱做对应的服务商
+     */
+    public static String email2Url(String email) {
+        if (email != null && email.contains("@")) {
+            if(email.contains("qq.com")){
+                return "https://mail.qq.com";
+            }else if (email.contains("163.com")){
+                 return "https://mail.163.com";
+            }else if(email.contains("gmail.com")){
+                return "https://mail.google.com";
+            }else {
+                return null;
+            }
+
+        }else {
+            return null;
+        }
+
+    }
 
 }

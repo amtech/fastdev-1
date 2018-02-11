@@ -1,16 +1,12 @@
 package cn.lucode.fastdev.verify.controller;
 
-import cn.lucode.fastdev.common.CommonBizTypeCode;
 import cn.lucode.fastdev.common.CommonResponseModel;
 import cn.lucode.fastdev.enums.TemplateType;
-import cn.lucode.fastdev.user.controller.UserController;
-import cn.lucode.fastdev.user.model.LoginReq;
-import cn.lucode.fastdev.user.utils.UserException;
 import cn.lucode.fastdev.util.LogUtil;
 import cn.lucode.fastdev.verify.EmailModel;
 import cn.lucode.fastdev.verify.service.QQEmailService;
+import cn.lucode.fastdev.verify.service.impl.QQEmailServiceImpl;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ *
  * @author yunfeng.lu
  * @create 2018/2/9.
  */
 @RestController
 @RequestMapping("/send")
+@Api("发送邮件测试接口")
 public class SendController {
 
     private static final Logger logger = LoggerFactory.getLogger(SendController.class);
@@ -32,7 +30,7 @@ public class SendController {
     private QQEmailService qqEmailService;
 
     @PostMapping("/qqemail")
-    public Object login( @RequestParam(value = "sendTo") String sendTo){
+    public Object login(@RequestParam(value = "sendTo") String sendTo){
 
         try {
             EmailModel emailModel=new EmailModel();

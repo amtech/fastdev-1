@@ -183,4 +183,10 @@
         from user
         where login_name = #{loginName,jdbcType=VARCHAR}
     </select>
+    <select id="selectByEmail" resultType="cn.lucode.fastdev.user.dal.pojo.User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where user_email = #{email,jdbcType=VARCHAR}
+    </select>
 </mapper>

@@ -10,7 +10,9 @@ public interface UserService {
 
     LoginRes login(LoginReq loginReq);
 
-    RegisterRes register(RegisterReq registerReq);
+    String registerStep1(RegisterReq registerReq);
+
+    void registerStep2(RegisterReq registerReq) ;
 
 
     UserInfoModel getUserInfo(String authToken);

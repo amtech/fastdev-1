@@ -15,6 +15,8 @@ public class RegisterReq implements Serializable {
 
     private String email;
 
+    private String verifCode;
+
     public String getLoginName() {
         return loginName;
     }
@@ -39,12 +41,21 @@ public class RegisterReq implements Serializable {
         this.email = email;
     }
 
+    public String getVerifCode() {
+        return verifCode;
+    }
+
+    public void setVerifCode(String verifCode) {
+        this.verifCode = verifCode;
+    }
+
     @Override
     public String toString() {
         return "RegisterReq{" +
                 "loginName='" + loginName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", verifCode='" + verifCode + '\'' +
                 '}';
     }
 }
