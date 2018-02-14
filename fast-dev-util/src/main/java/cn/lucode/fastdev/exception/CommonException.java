@@ -9,7 +9,6 @@ import cn.lucode.fastdev.common.ReturnCodeModel;
  */
 public class CommonException extends RuntimeException {
 
-
     private static final long serialVersionUID = 5719639814985692478L;
     private ReturnCodeModel exception_type;
 

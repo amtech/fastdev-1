@@ -29,6 +29,16 @@ public class LogAop {
 
     private final static Logger monitor_logger = LoggerFactory.getLogger("LogMonitor");
 
+    private final static String DEF_PROCESS_SUCCESS_RESULT = "T";
+
+    private final static String DEF_PROCESS_SLOW_RESULT = "S";
+
+    private final static String DEF_PROCESS_ERROR_RESULT = "E";
+
+    private final static String DEF_SUCCESS_CODE = "9999";
+
+    private final static String DEF_ERROR_CODE = "0000";
+
     private static String ip_address = null;
 
     static {
@@ -46,9 +56,9 @@ public class LogAop {
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             requestIp = IPUtils.getIpAddress(request);
-            logger.info("请求 ip {}", requestIp);
+            //logger.info("请求 ip {}", requestIp);
         } catch (Exception ex) {
-            logger.info("请求 ip 获取失败");
+            logger.error("请求 ip 获取失败");
         }
 
         Object result = null;
@@ -58,6 +68,8 @@ public class LogAop {
         String className = pjp.getTarget().getClass().getName();
         String methodName = pjp.getSignature().getName();
         String relateId = String.valueOf(new StringBuilder(String.valueOf(current_time)).append(className).append(methodName).toString().hashCode());
+        String processResult = DEF_PROCESS_SUCCESS_RESULT;
+        String errorCode = DEF_SUCCESS_CODE;
         try {
 
             result = pjp.proceed();
@@ -75,30 +87,41 @@ public class LogAop {
             long lastTime = System.currentTimeMillis() - current_time;
 
             if (lastTime >= 2000) {
-                LogUtil.info(logger, "{0}.{1}:{2}该方法执行较慢请检查  入参: {3}, \t出参: {4} 响应时间:{5}毫秒", className,
+                processResult = DEF_PROCESS_SLOW_RESULT;
+                LogUtil.info(logger, "请求ip：{0}——{1}.{2}:{3}，该方法执行较慢请检查... 入参: {4} \t出参: {5} 响应时间:{6}毫秒",requestIp, className,
                         methodName, relateId, inParam,
                         printOption.equals(LogAuto.ParamPrintOption.PRINT) ? result : "", lastTime);
             } else {
-                LogUtil.info(logger, "{0}.{1}:{2} 入参: {3} \t出参: {4} 响应时间:{5}毫秒", className,
+                //ip 类名.方法名.请求id 入参 出参
+                LogUtil.info(logger, "请求ip：{0}——{1}.{2}:{3} 入参: {4} \t出参: {5} 响应时间:{6}毫秒", requestIp,className,
                         methodName, relateId,
-                        printOption.equals(LogAuto.ParamPrintOption.PRINT) ? inParam : "参数太长不打印了",
+                        inParam,
                         printOption.equals(LogAuto.ParamPrintOption.PRINT) ? result : "参数太长不打印了", lastTime);
             }
 
-            monitor_logger.info("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", requestIp, className, methodName, relateId, "uid/设备ID", logAuto.value(), ip_address, inParam, "T", lastTime);
+            //{类名}~{方法名}~{关联ID}~{设备ID}~{IP地址}~{错误码}~{错误消息}~{执行结果}~{执行时间}
+            monitor_logger.info("{}~{}~{}~{}~{}~{}~{}~{}~{}", className, methodName, relateId, "uid/设备ID",ip_address, errorCode,"执行成功",processResult,lastTime);
 
         } catch (CommonException ex) {
+            processResult = DEF_PROCESS_ERROR_RESULT;
+
             LogUtil.error(logger, ex, "{0}.{1}:{2} 执行报错,入参: {3}", pjp.getTarget().getClass().getName(),
                     pjp.getSignature().getName(), relateId, Arrays.toString(pjp.getArgs()));
 
-            monitor_logger.info("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", requestIp, className, methodName, relateId, "uid/设备ID", logAuto.value(), ip_address, inParam, "T", 0);
-
+            monitor_logger.info("{}~{}~{}~{}~{}~{}~{}~{}~{}", className, methodName, relateId, "uid/设备ID",ip_address, ex.getErrorCode(),ex.getMessage(),
+                    processResult,System.currentTimeMillis() - current_time);
             throw ex;
+
         } catch (Throwable throwable) {
+            errorCode = DEF_ERROR_CODE;
+
+            processResult = DEF_PROCESS_ERROR_RESULT;
+
             LogUtil.error(logger, throwable, "{0}.{1}:{2} 执行报错,入参: {3}", pjp.getTarget().getClass().getName(),
                     pjp.getSignature().getName(), relateId, Arrays.toString(pjp.getArgs()));
 
-            monitor_logger.info("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", requestIp, className, methodName, relateId, "uid/设备ID", logAuto.value(), ip_address, inParam, "F", 0);
+            monitor_logger.info("{}~{}~{}~{}~{}~{}~{}~{}~{}", className, methodName, relateId, "uid/设备ID",ip_address,errorCode,throwable.getMessage(),
+                    processResult,System.currentTimeMillis() - current_time);
 
             throw throwable;
         }
