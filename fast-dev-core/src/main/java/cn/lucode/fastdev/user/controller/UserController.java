@@ -103,7 +103,7 @@ public class UserController {
                                   @RequestParam(value = "authToken") String authToken){
         try {
 
-            return CommonResponseModel.success(userService.getUserInfo(authToken));
+            return CommonResponseModel.success(userService.getUserInfoByAuthToken(authToken));
 
         } catch (UserException ue) {
 

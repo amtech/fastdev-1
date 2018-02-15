@@ -15,8 +15,9 @@ public interface UserService {
     void registerStep2(RegisterReq registerReq) ;
 
 
-    UserInfoModel getUserInfo(String authToken);
+    UserInfoModel getUserInfoByAuthToken(String authToken);
 
+    UserInfoModel getUserInfoById(String uid);
 
     void layout(String authToken);
 }

@@ -254,7 +254,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @LogAuto(CommonAppCode.FastDevApp)
-    public UserInfoModel getUserInfo(String authToken) {
+    public UserInfoModel getUserInfoByAuthToken(String authToken) {
         AuthInfoModel authInfoModel = authTokenUtil.parseAuthToken(authToken);
         // 登陆失效
         if (authInfoModel == null) {
@@ -263,6 +263,16 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.selectByPrimaryKey(authInfoModel.getUserId());
 
+        if (user == null) {
+            throw new UserException(ReturnCodeModel.NO_DATE);
+        }
+        return UserInfoModel.pojo2Model(user);
+    }
+
+    @Override
+    @LogAuto(CommonAppCode.FastDevApp)
+    public UserInfoModel getUserInfoById(String uid) {
+        User user = userMapper.selectByPrimaryKey(uid);
         if (user == null) {
             throw new UserException(ReturnCodeModel.NO_DATE);
         }
