@@ -25,6 +25,11 @@ public class RedisOperation implements IRedisOperation {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * 字符串操作
+     * @param key
+     * @param value
+     */
     @Override
     public void setValue(String key, String value) {
         stringRedisTemplate.opsForValue().set(key, value);
@@ -35,28 +40,44 @@ public class RedisOperation implements IRedisOperation {
         stringRedisTemplate.opsForValue().set(key, value, timeout , unit);
     }
 
+    /**
+     * 字符串 kv 操作
+     * @param key
+     * @return
+     */
+    @Override
+    public String getValue(String key) {
+        return stringRedisTemplate.opsForValue().get(key);
+    }
+
+    /**
+     * Hash 值设置
+     * @param key
+     * @param value
+     */
     @Override
     public void setHashAll(String key, Map<String,Object> value) {
         stringRedisTemplate.opsForHash().putAll(key,value);
     }
 
+    /**
+     * Hash 值设置，并设置超时时间
+     * @param key
+     * @param value
+     * @param timeout
+     * @param unit
+     */
     @Override
     public void setHashAll(String key, Map<String,Object> value, Long timeout,TimeUnit unit) {
         stringRedisTemplate.opsForHash().putAll(key,value);
         stringRedisTemplate.expire(key,timeout,unit);
     }
 
-    @Override
-    public String getValue(String key) {
-        return stringRedisTemplate.opsForValue().get(key);
-    }
-
-    @Override
-    public List<String> getValues(String prex) {
-        Set<String> keys = stringRedisTemplate.keys(prex + "*");
-        return stringRedisTemplate.opsForValue().multiGet(keys);
-    }
-
+    /**
+     * 根据 key 获取 Hash 类型的 value
+     * @param key
+     * @return
+     */
     @Override
     public Map<Object ,Object> getHash(String key) {
         return stringRedisTemplate.opsForHash().entries(key);
@@ -64,10 +85,26 @@ public class RedisOperation implements IRedisOperation {
 
 
 
+    /**
+     * 模糊查询 慎用！！！！！
+     * @param prex
+     * @return
+     */
+    @Override
+    public List<String> getValues(String prex) {
+        Set<String> keys = stringRedisTemplate.keys(prex + "*");
+        return stringRedisTemplate.opsForValue().multiGet(keys);
+    }
+
+
+
+
     @Override
     public void removeV(String key) {
         stringRedisTemplate.delete(key);
     }
+
+
 
     @Override
     public void setSetValue(String key, Long timeout, String... values) {

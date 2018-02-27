@@ -501,19 +501,36 @@ public class StringUtil {
      */
     public static String email2Url(String email) {
         if (email != null && email.contains("@")) {
-            if(email.contains("qq.com")){
+            if (email.contains("qq.com")) {
                 return "https://mail.qq.com";
-            }else if (email.contains("163.com")){
-                 return "https://mail.163.com";
-            }else if(email.contains("gmail.com")){
+            } else if (email.contains("163.com")) {
+                return "https://mail.163.com";
+            } else if (email.contains("gmail.com")) {
                 return "https://mail.google.com";
-            }else {
+            } else {
                 return null;
             }
 
-        }else {
+        } else {
             return null;
         }
+    }
+
+
+    public static boolean isAllDigit(String strNum) {
+        if (strNum != null) {
+            // 去除收尾空格
+            strNum=strNum.trim();
+        }
+        Pattern pattern = Pattern.compile("[0-9]{1,}");
+        Matcher matcher = pattern.matcher((CharSequence) strNum);
+        return matcher.matches();
+    }
+
+    public static void main(String[] args) {
+        String str="";
+        System.out.println(isAllDigit("45  45  "));
+
 
     }
 
