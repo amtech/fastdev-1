@@ -13,6 +13,12 @@ import java.util.List;
  */
 public class CollectionUtils {
 
+    /**
+     * str 字符串是否包含在 这个集合中
+     * @param str
+     * @param collection
+     * @return
+     */
     public static boolean isContainOneString(String str, Collection<?> collection) {
         boolean flag = false;
         if (!CollectionUtils.isEmpty(collection) && !StringUtil.isNil(str)) {

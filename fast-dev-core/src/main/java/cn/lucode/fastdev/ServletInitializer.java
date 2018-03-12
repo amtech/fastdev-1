@@ -16,7 +16,7 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        logger.info("开始启动spring boot 配置初始化");
+        logger.info("开始启动 spring boot 配置初始化");
         return application.sources(StartApplication.class);
     }
 

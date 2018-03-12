@@ -14,13 +14,14 @@ import org.springframework.core.annotation.Order;
 @Configuration
 public class DruidServletConfig {
     private static final Logger logger = LoggerFactory.getLogger(DruidServletConfig.class);
+
     @Bean
     @Order
     public ServletRegistrationBean statViewServlet() {
         logger.info("==========druid配置启动========");
         StatViewServlet servlet = new StatViewServlet();
         ServletRegistrationBean bean = new ServletRegistrationBean(servlet, "/druid/*");
-        bean.addInitParameter("loginUsername", "druid");
+        bean.addInitParameter("loginUsername", "lucode");
         bean.addInitParameter("loginPassword", "123");
 
         return bean;

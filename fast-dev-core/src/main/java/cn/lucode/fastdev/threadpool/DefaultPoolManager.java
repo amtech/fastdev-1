@@ -28,6 +28,10 @@ public class DefaultPoolManager extends ParentPoolManager {
     @Qualifier(value = ASYNC_POOL)
     private ThreadPoolTaskExecutor ansycTaskExecutor;
 
+    /**
+     *初始化 系统启动时候的线程池
+     * @throws Exception
+     */
     @PostConstruct
     private void start() throws Exception {
         Map<String, PoolInfoModel> threadPoolInfo = deaultThreadPoolConfig.getPoolInfo();

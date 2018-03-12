@@ -1,6 +1,7 @@
 package cn.lucode.fastdev.threadpool;
 
 /**
+ * 与线程池相关的常量配置
  * @author yunfeng.lu
  * @create 2018/2/9.
  */

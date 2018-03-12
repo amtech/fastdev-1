@@ -154,8 +154,6 @@ public class UUIDGenerator {
      * @return
      * @throws Exception
      */
-
-
     public static String formatIp() throws Exception {
 
         byte[] ip_bytes = InetAddress.getLocalHost().getAddress();
@@ -230,7 +228,6 @@ public class UUIDGenerator {
             for(int i=1;i<1560;i++){
                 System.out.println(UUIDGenerator.generate());
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();

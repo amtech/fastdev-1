@@ -99,8 +99,8 @@ public class LogAop {
                         printOption.equals(LogAuto.ParamPrintOption.PRINT) ? result : "参数太长不打印了", lastTime);
             }
 
-            //{类名}~{方法名}~{关联ID}~{设备ID}~{IP地址}~{错误码}~{错误消息}~{执行结果}~{执行时间}
-            monitor_logger.info("{}~{}~{}~{}~{}~{}~{}~{}~{}", className, methodName, relateId, "uid/设备ID",ip_address, errorCode,"执行成功",processResult,lastTime);
+            //{请求ip}~{类名}~{方法名}~{关联ID}~{设备ID}~{IP地址}~{错误码}~{错误消息}~{执行结果}~{执行时间}
+            monitor_logger.info("{}~{}~{}~{}~{}~{}~{}~{}~{}~{}", requestIp,className, methodName, relateId, "uid/设备ID",ip_address, errorCode,"执行成功",processResult,lastTime);
 
         } catch (CommonException ex) {
             processResult = DEF_PROCESS_ERROR_RESULT;
@@ -108,7 +108,7 @@ public class LogAop {
             LogUtil.error(logger, ex, "{0}.{1}:{2} 执行报错,入参: {3}", pjp.getTarget().getClass().getName(),
                     pjp.getSignature().getName(), relateId, Arrays.toString(pjp.getArgs()));
 
-            monitor_logger.info("{}~{}~{}~{}~{}~{}~{}~{}~{}", className, methodName, relateId, "uid/设备ID",ip_address, ex.getErrorCode(),ex.getMessage(),
+            monitor_logger.info("{}~{}~{}~{}~{}~{}~{}~{}~{}~{}", requestIp,className, methodName, relateId, "uid/设备ID",ip_address, ex.getErrorCode(),ex.getMessage(),
                     processResult,System.currentTimeMillis() - current_time);
             throw ex;
 
@@ -120,7 +120,7 @@ public class LogAop {
             LogUtil.error(logger, throwable, "{0}.{1}:{2} 执行报错,入参: {3}", pjp.getTarget().getClass().getName(),
                     pjp.getSignature().getName(), relateId, Arrays.toString(pjp.getArgs()));
 
-            monitor_logger.info("{}~{}~{}~{}~{}~{}~{}~{}~{}", className, methodName, relateId, "uid/设备ID",ip_address,errorCode,throwable.getMessage(),
+            monitor_logger.info("{}~{}~{}~{}~{}~{}~{}~{}~{}~{}", requestIp,className, methodName, relateId, "uid/设备ID",ip_address,errorCode,throwable.getMessage(),
                     processResult,System.currentTimeMillis() - current_time);
 
             throw throwable;
