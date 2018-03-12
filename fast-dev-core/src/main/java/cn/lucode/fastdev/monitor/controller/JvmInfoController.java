@@ -24,7 +24,7 @@ public class JvmInfoController {
 
     @GetMapping(value = "/jvminfo/getInfo")
     public Object rmLocal() throws Exception {
-       return CommonResponseModel.success(jvmInfoService.getJvm());
+       return CommonResponseModel.success(jvmInfoService.getJvmInfo());
 
     }
 
