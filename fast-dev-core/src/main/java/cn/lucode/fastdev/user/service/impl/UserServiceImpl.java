@@ -60,6 +60,12 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    /**
+     * private String loginName;
+     * private String password;
+     * @param loginReq
+     * @return
+     */
     @Override
     @LogAuto(CommonAppCode.FastDevApp)
     public LoginRes login(LoginReq loginReq) {
@@ -204,7 +210,7 @@ public class UserServiceImpl implements UserService {
 
         // 开始进入注册流程
         User newUser = new User();
-        // 拼装参数
+        // 唯一 id
         newUser.setUserId(UUIDGenerator.generate());
         newUser.setLoginName(registerReq.getLoginName());
         //密码加密

@@ -7,7 +7,7 @@ import org.slf4j.Logger;
  * 统一日志打印工具
  *
  * @author windy
- * @version $Id: LogUtil.java, v 0.1 2015-11-30 下午03:35:43 multiple persons Exp $
+ * @version $Id: LogUtil.java, v 0.1 2017-11-30 下午03:35:43 multiple persons Exp $
  */
 public final class LogUtil {
 
