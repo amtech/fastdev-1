@@ -21,6 +21,8 @@ public class JvmInfoServiceImpl implements JvmInfoService {
     private  static Map<String,Long> lastInfo=new HashMap<String,Long>();
     private  static final AtomicBoolean start = new AtomicBoolean(false);
 
+    private  static Long million=Long.parseLong((1024*1024)+"");
+
     SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
@@ -28,6 +30,7 @@ public class JvmInfoServiceImpl implements JvmInfoService {
 
 
     public Map<String,String> getJvmInfo(){
+
         JVMTotalBean jvmTotalBean=JVMTotalBean.getInstance();
         Map<String,String> result=new HashMap<String,String>();
         try {
@@ -48,19 +51,19 @@ public class JvmInfoServiceImpl implements JvmInfoService {
                 result.put("yGCTime", jvmTotalBean.getyGCTime() + "");
                 result.put("fGCCount", fGCCount + "");
                 result.put("fGCTime", jvmTotalBean.getfGCTime() + "");
-                result.put("heapMaxMem", heapMaxMem + "");
-                result.put("heapUsedMem", heapUsedMem + "");
-                result.put("nonHeapMaxMem", nonHeapMaxMem + "");
-                result.put("nonHeapUsedMem", nonHeapUsedMem + "");
-                result.put("permGenMax", jvmTotalBean.getOldGenMax() + "");
-                result.put("permGenUsed", jvmTotalBean.getPermGenUsed() + "");
-                result.put("oldGenMax", oldGenMax + "");
-                result.put("oldGenUsed", oldGenUsed + "");
-                result.put("edenSpaceMax", jvmTotalBean.getEdenSpaceMax() + "");
-                result.put("edenSpaceUsed", jvmTotalBean.getEdenSpaceUsed() + "");
-                result.put("survivorMax", jvmTotalBean.getSurvivorMax() + "");
-                result.put("survivorUsed", jvmTotalBean.getSurvivorUsed() + "");
-                result.put("daemonThreadCount", jvmTotalBean.getDaemonThreadCount() + "");
+                result.put("heapMaxMem", heapMaxMem/million + "M");
+                result.put("heapUsedMem", heapUsedMem/million + "M");
+                result.put("nonHeapMaxMem", nonHeapMaxMem/million + "M");
+                result.put("nonHeapUsedMem", nonHeapUsedMem/million + "M");
+                result.put("permGenMax", jvmTotalBean.getOldGenMax()/million + "M");
+                result.put("permGenUsed", jvmTotalBean.getPermGenUsed()/million + "M");
+                result.put("oldGenMax", oldGenMax/million + "M");
+                result.put("oldGenUsed", oldGenUsed/million + "M");
+                result.put("edenSpaceMax", jvmTotalBean.getEdenSpaceMax()/million + "M");
+                result.put("edenSpaceUsed", jvmTotalBean.getEdenSpaceUsed()/million + "M");
+                result.put("survivorMax", jvmTotalBean.getSurvivorMax()/million + "M");
+                result.put("survivorUsed", jvmTotalBean.getSurvivorUsed()/million + "M");
+                result.put("daemonThreadCount", jvmTotalBean.getDaemonThreadCount() + "M");
                 result.put("threadCount", jvmTotalBean.getThreadCount() + "");
                 result.put("totalStartedThreadCount", jvmTotalBean.getTotalStartedThreadCount() + "");
                 result.put("deadLockedThreadCount", jvmTotalBean.getDeadLockedThreadCount() + "");
