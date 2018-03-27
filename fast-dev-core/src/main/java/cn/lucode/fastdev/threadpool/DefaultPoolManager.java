@@ -29,7 +29,7 @@ public class DefaultPoolManager extends ParentPoolManager {
     private ThreadPoolTaskExecutor ansycTaskExecutor;
 
     /**
-     *初始化 系统启动时候的线程池
+     * 初始化 系统启动时候的线程池
      * @throws Exception
      */
     @PostConstruct
